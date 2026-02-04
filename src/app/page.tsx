@@ -207,7 +207,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen text-zinc-950">
+    <main className="min-h-[100svh] text-zinc-950">
       <AnimatedBackground />
       {/* שכבת כהה עדינה על הרקע כדי “להרגיע” את הבהיר */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-black/15" />
@@ -221,9 +221,9 @@ export default function HomePage() {
         onChange={onRestoreFile}
       />
 
-      <div className="mx-auto max-w-[1100px] px-6 pb-12 pt-12 md:pt-16">
+      <div className="mx-auto max-w-[1100px] px-4 pb-10 pt-8 sm:px-6 md:pt-16">
         {/* HERO */}
-        <section className="relative overflow-hidden rounded-[30px] border border-black/10 bg-white/80 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur md:p-8">
+      <section className="relative overflow-hidden rounded-[30px] border border-black/10 bg-white/80 p-4 sm:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur md:p-8">
           {/* soft blobs */}
           <div className="pointer-events-none absolute inset-0 opacity-60">
             <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.35),transparent_60%)] blur-2xl" />
@@ -234,33 +234,40 @@ export default function HomePage() {
           <div className="relative grid gap-6 md:grid-cols-[1fr_520px] md:items-center">
             {/* LEFT */}
             <div className="min-w-0">
-              <h1 className="text-4xl font-extrabold tracking-tight md:text-6xl">RoutineLand</h1>
+              <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-6xl">RoutineLand</h1>
+
 
               <div className="mt-2 text-base text-zinc-700 md:text-xl">
                 סדר בראש · התקדמות בפועל · שקט נפשי
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-zinc-800 shadow-sm">
+              <div className="mt-4 flex flex-wrap gap-2 sm:gap-3">
+                <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
+
                   {mounted ? `${totals.open} פתוחות` : "— פתוחות"}
                 </span>
-                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-zinc-800 shadow-sm">
+                <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
                   {mounted ? `${totals.done} הושלמו` : "— הושלמו"}
                 </span>
-                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-zinc-800 shadow-sm">
+                <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
+
                   {mounted ? `${totals.all} סה״כ` : "— סה״כ"}
                 </span>
               </div>
 
               {/* ✅ mini stats row: streak + today + week */}
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-zinc-800 shadow-sm">
+              <div className="mt-4 flex flex-wrap gap-2 sm:gap-3">
+
+                <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
+
                   {mounted ? `רצף: ${home.streakDays} ימים` : "רצף: —"}
                 </span>
-                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-zinc-800 shadow-sm">
+                <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
+
                   {mounted ? `הושלמו היום: ${home.doneToday}` : "הושלמו היום: —"}
                 </span>
-                <span className="rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs text-zinc-800 shadow-sm">
+                <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
+
                   {mounted ? `הושלמו השבוע: ${home.doneThisWeek}` : "הושלמו השבוע: —"}
                 </span>
               </div>
@@ -315,7 +322,8 @@ export default function HomePage() {
 
             {/* RIGHT: BIG LOGO */}
             <div className="flex justify-center md:justify-end">
-              <div className="relative h-[260px] w-[260px] md:h-[360px] md:w-[360px] shrink-0">
+              <div className="relative h-[170px] w-[170px] sm:h-[220px] sm:w-[220px] md:h-[360px] md:w-[360px] shrink-0">
+
                 <Image
                   src="/image1.jpg"
                   alt="RoutineLand logo"
@@ -341,7 +349,7 @@ export default function HomePage() {
                 key={tf}
                 href={`/goals/${tf}`}
                 className={[
-                  "group relative overflow-hidden rounded-2xl border border-black/10 bg-white/85 p-6 shadow-md",
+                  "group relative overflow-hidden rounded-2xl border border-black/10 bg-white/85 p-4 shadow-md",
                   "transition hover:-translate-y-1 hover:shadow-[0_18px_50px_rgba(0,0,0,0.18)]",
                 ].join(" ")}
               >
