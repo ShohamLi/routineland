@@ -518,145 +518,144 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
     setEditingId(null);
     setToast("עודכן ✅");
   }
+function renderAddOrEditForm(mode: "add" | "edit") {
+  const isEdit = mode === "edit";
 
-  // קומפוננטת טופס (משמשת גם Add וגם Edit)
-  function AddOrEditForm({ mode }: { mode: "add" | "edit" }) {
-    const isEdit = mode === "edit";
+  const vTitle = isEdit ? editTitle : title;
+  const vSetTitle = isEdit ? setEditTitle : setTitle;
 
-    const vTitle = isEdit ? editTitle : title;
-    const vSetTitle = isEdit ? setEditTitle : setTitle;
+  const vCategory = isEdit ? editCategoryId : categoryId;
+  const vSetCategory = isEdit ? setEditCategoryId : setCategoryId;
 
-    const vCategory = isEdit ? editCategoryId : categoryId;
-    const vSetCategory = isEdit ? setEditCategoryId : setCategoryId;
+  const vStartDate = isEdit ? editStartDate : startDate;
+  const vSetStartDate = isEdit ? setEditStartDate : setStartDate;
 
-    const vStartDate = isEdit ? editStartDate : startDate;
-    const vSetStartDate = isEdit ? setEditStartDate : setStartDate;
+  const vStartTime = isEdit ? editStartTime : startTime;
+  const vSetStartTime = isEdit ? setEditStartTime : setStartTime;
 
-    const vStartTime = isEdit ? editStartTime : startTime;
-    const vSetStartTime = isEdit ? setEditStartTime : setStartTime;
+  const vDurationStr = isEdit ? editDurationValueStr : durationValueStr;
+  const vSetDurationStr = isEdit ? setEditDurationValueStr : setDurationValueStr;
 
-    const vDurationStr = isEdit ? editDurationValueStr : durationValueStr;
-    const vSetDurationStr = isEdit ? setEditDurationValueStr : setDurationValueStr;
+  const vEndAt = isEdit ? editEndAt : endAt;
 
-    const vEndAt = isEdit ? editEndAt : endAt;
+  const submit = isEdit ? saveEdit : addGoal;
 
-    const submit = isEdit ? saveEdit : addGoal;
+  return (
+    <section className="rounded-2xl border border-black/10 bg-white p-5 md:p-6 shadow-sm">
+      <div className="mb-4 text-base font-semibold text-zinc-950">
+        {isEdit ? "עריכת מטרה" : `הוסף מטרה (${header})`}
+      </div>
 
-    // ✅ שדות מוגדלים + גריד נוח (לא צפוף)
-    return (
-      <section className="rounded-2xl border border-black/10 bg-white p-5 md:p-6 shadow-sm">
-        <div className="mb-4 text-base font-semibold text-zinc-950">
-          {isEdit ? "עריכת מטרה" : `הוסף מטרה (${header})`}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="sm:col-span-2 lg:col-span-2">
+          <div className="mb-1 text-sm font-medium text-zinc-700">כותרת</div>
+          <input
+            value={vTitle}
+            onChange={(e) => vSetTitle(e.target.value)}
+            placeholder={
+              timeframe === "daily"
+                ? "לדוגמה: ללמוד 2 שעות"
+                : timeframe === "weekly"
+                ? "לדוגמה: 3 מטלות LeetCode"
+                : timeframe === "monthly"
+                ? "לדוגמה: 10 ימים רצוף"
+                : "לדוגמה: לסיים קורס"
+            }
+            className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none placeholder:text-zinc-400"
+          />
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="sm:col-span-2 lg:col-span-2">
-            <div className="mb-1 text-sm font-medium text-zinc-700">כותרת</div>
-            <input
-              value={vTitle}
-              onChange={(e) => vSetTitle(e.target.value)}
-              placeholder={
-                timeframe === "daily"
-                  ? "לדוגמה: ללמוד 2 שעות"
-                  : timeframe === "weekly"
-                  ? "לדוגמה: 3 מטלות LeetCode"
-                  : timeframe === "monthly"
-                  ? "לדוגמה: 10 ימים רצוף"
-                  : "לדוגמה: לסיים קורס"
-              }
-              className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none placeholder:text-zinc-400"
-            />
-          </div>
-
-          <div>
-            <div className="mb-1 text-sm font-medium text-zinc-700">קטגוריה</div>
-            <select
-              value={vCategory}
-              onChange={(e) => vSetCategory(e.target.value)}
-              className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none"
-            >
-              {sortedCategories.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.nameHe}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <div className="mb-1 text-sm font-medium text-zinc-700">תאריך התחלה</div>
-            <input
-              type="date"
-              value={vStartDate}
-              onChange={(e) => vSetStartDate(e.target.value)}
-              className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none"
-            />
-          </div>
-
-          <div>
-            <div className="mb-1 text-sm font-medium text-zinc-700">שעת התחלה</div>
-            <input
-              type="time"
-              value={vStartTime}
-              onChange={(e) => vSetStartTime(e.target.value)}
-              className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none"
-            />
-          </div>
-
-          <div>
-            <div className="mb-1 text-sm font-medium text-zinc-700">משך ({cfg.label})</div>
-            <input
-              type="number"
-              min={cfg.min}
-              max={cfg.max}
-              value={vDurationStr}
-              onChange={(e) => vSetDurationStr(e.target.value)}
-              placeholder="לדוגמה: 2"
-              className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none placeholder:text-zinc-400"
-            />
-            <div className="mt-2 text-xs text-zinc-500">
-              {timeframe === "daily" && "0–24 שעות"}
-              {timeframe === "weekly" && "1–7 ימים"}
-              {timeframe === "monthly" && "1–31 ימים"}
-              {timeframe === "yearly" && "1–12 חודשים"}
-            </div>
-          </div>
+        <div>
+          <div className="mb-1 text-sm font-medium text-zinc-700">קטגוריה</div>
+          <select
+            value={vCategory}
+            onChange={(e) => vSetCategory(e.target.value)}
+            className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none"
+          >
+            {sortedCategories.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.nameHe}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="text-sm text-zinc-700">
-            סיום מחושב:{" "}
-            <span className="font-medium text-zinc-950">
-              {vEndAt ? vEndAt.replace("T", " ") : "—"}
-            </span>
+        <div>
+          <div className="mb-1 text-sm font-medium text-zinc-700">תאריך התחלה</div>
+          <input
+            type="date"
+            value={vStartDate}
+            onChange={(e) => vSetStartDate(e.target.value)}
+            className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none"
+          />
+        </div>
+
+        <div>
+          <div className="mb-1 text-sm font-medium text-zinc-700">שעת התחלה</div>
+          <input
+            type="time"
+            value={vStartTime}
+            onChange={(e) => vSetStartTime(e.target.value)}
+            className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none"
+          />
+        </div>
+
+        <div>
+          <div className="mb-1 text-sm font-medium text-zinc-700">משך ({cfg.label})</div>
+          <input
+            type="number"
+            min={cfg.min}
+            max={cfg.max}
+            value={vDurationStr}
+            onChange={(e) => vSetDurationStr(e.target.value)}
+            placeholder="לדוגמה: 2"
+            className="h-12 w-full rounded-xl border border-black/10 bg-white px-4 text-base text-zinc-950 outline-none placeholder:text-zinc-400"
+          />
+          <div className="mt-2 text-xs text-zinc-500">
+            {timeframe === "daily" && "0–24 שעות"}
+            {timeframe === "weekly" && "1–7 ימים"}
+            {timeframe === "monthly" && "1–31 ימים"}
+            {timeframe === "yearly" && "1–12 חודשים"}
           </div>
+        </div>
+      </div>
 
-          <div className="flex items-center gap-2">
-            {isEdit && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditOpen(false);
-                  setEditingId(null);
-                }}
-                className="h-12 rounded-xl border border-black/10 bg-white px-5 text-base font-medium text-zinc-900 hover:bg-zinc-50"
-              >
-                ביטול
-              </button>
-            )}
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="text-sm text-zinc-700">
+          סיום מחושב:{" "}
+          <span className="font-medium text-zinc-950">
+            {vEndAt ? vEndAt.replace("T", " ") : "—"}
+          </span>
+        </div>
 
+        <div className="flex items-center gap-2">
+          {isEdit && (
             <button
               type="button"
-              onClick={submit}
-              className="h-12 rounded-xl bg-zinc-950 px-6 text-base font-medium text-white hover:bg-zinc-900"
+              onClick={() => {
+                setEditOpen(false);
+                setEditingId(null);
+              }}
+              className="h-12 rounded-xl border border-black/10 bg-white px-5 text-base font-medium text-zinc-900 hover:bg-zinc-50"
             >
-              {isEdit ? "שמור" : "הוסף"}
+              ביטול
             </button>
-          </div>
+          )}
+
+          <button
+            type="button"
+            onClick={submit}
+            className="h-12 rounded-xl bg-zinc-950 px-6 text-base font-medium text-white hover:bg-zinc-900"
+          >
+            {isEdit ? "שמור" : "הוסף"}
+          </button>
         </div>
-      </section>
-    );
-  }
+      </div>
+    </section>
+  );
+}
+
+
 
   return (
     <main className="min-h-screen text-zinc-950">
@@ -722,7 +721,8 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
         </div>
 
         <div className="hidden md:block">
-          <AddOrEditForm mode="add" />
+          {renderAddOrEditForm("add")}
+
         </div>
 
         {filtered.length === 0 ? (
@@ -840,7 +840,8 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
       </div>
 
       <Modal open={addOpen} title={`הוסף מטרה (${header})`} onClose={() => setAddOpen(false)}>
-        <AddOrEditForm mode="add" />
+        {renderAddOrEditForm("add")}
+
       </Modal>
 
       <Modal
@@ -851,7 +852,8 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
           setEditingId(null);
         }}
       >
-        <AddOrEditForm mode="edit" />
+        {renderAddOrEditForm("edit")}
+
       </Modal>
 
       <Toast message={toast} onClose={() => setToast(null)} />
