@@ -223,7 +223,8 @@ export default function HomePage() {
 
       <div className="mx-auto max-w-[1100px] px-4 pb-10 pt-8 sm:px-6 md:pt-16">
         {/* HERO */}
-      <section className="relative overflow-hidden rounded-[30px] border border-black/10 bg-white/80 p-4 sm:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur md:p-8">
+      <section className="relative overflow-hidden rounded-[26px] border border-black/10 bg-white/85 p-4 sm:p-6 shadow-sm sm:shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur md:p-8">
+
           {/* soft blobs */}
           <div className="pointer-events-none absolute inset-0 opacity-60">
             <div className="absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.35),transparent_60%)] blur-2xl" />
@@ -241,7 +242,8 @@ export default function HomePage() {
                 סדר בראש · התקדמות בפועל · שקט נפשי
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2 sm:gap-3">
+              <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start sm:gap-3">
+
                 <span className="rounded-full ... px-3 py-1 text-xs sm:text-sm text-zinc-800 shadow-sm">
 
                   {mounted ? `${totals.open} פתוחות` : "— פתוחות"}
@@ -276,21 +278,24 @@ export default function HomePage() {
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <button
                   onClick={onBackup}
-                  className="rounded-xl border border-black/10 bg-white/70 px-3 py-2 text-sm text-zinc-900 shadow-sm hover:bg-white"
+                 className="rounded-full border border-black/10 bg-white/80 px-4 py-2 text-xs sm:text-sm text-zinc-900 shadow-sm hover:bg-white"
+
                 >
                   גבה נתונים
                 </button>
 
                 <button
                   onClick={onPickRestoreFile}
-                  className="rounded-xl border border-black/10 bg-white/70 px-3 py-2 text-sm text-zinc-900 shadow-sm hover:bg-white"
+                 className="rounded-full border border-black/10 bg-white/80 px-4 py-2 text-xs sm:text-sm text-zinc-900 shadow-sm hover:bg-white"
+
                 >
                   שחזר מגיבוי
                 </button>
 
                 <button
                   onClick={onToggleReminders}
-                  className="rounded-xl border border-black/10 bg-white/70 px-3 py-2 text-sm text-zinc-900 shadow-sm hover:bg-white"
+                 className="rounded-full border border-black/10 bg-white/80 px-4 py-2 text-xs sm:text-sm text-zinc-900 shadow-sm hover:bg-white"
+
                 >
                   {remindersEnabled ? "כבה תזכורות" : "הפעל תזכורות"}
                 </button>
