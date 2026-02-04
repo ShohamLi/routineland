@@ -679,11 +679,12 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
             </h1>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* ✅ FIX: במובייל זה נשבר לשורות ולא “בורח” מחוץ למסך */}
+          <div className="flex flex-wrap items-center gap-2">
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="h-11 rounded-xl border border-black/10 bg-white/80 px-3 text-sm text-zinc-900 outline-none"
+              className="h-11 w-full sm:w-auto rounded-xl border border-black/10 bg-white/80 px-3 text-sm text-zinc-900 outline-none"
               title="סינון קטגוריה"
             >
               <option value="all">כל הקטגוריות</option>
@@ -698,12 +699,12 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="חיפוש..."
-              className="h-11 w-44 rounded-xl border border-black/10 bg-white/80 px-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-500"
+              className="h-11 w-full sm:w-44 rounded-xl border border-black/10 bg-white/80 px-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-500"
             />
 
             <button
               onClick={clearFilters}
-              className="h-11 rounded-xl border border-black/10 bg-white/80 px-3 text-sm text-zinc-800 hover:bg-white"
+              className="h-11 w-full sm:w-auto rounded-xl border border-black/10 bg-white/80 px-3 text-sm text-zinc-800 hover:bg-white"
               title="נקה פילטרים"
             >
               נקה
@@ -713,7 +714,7 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
             <button
               type="button"
               onClick={() => setAddOpen(true)}
-              className="md:hidden h-11 rounded-xl bg-zinc-950 px-3 text-sm font-medium text-white hover:bg-zinc-900"
+              className="md:hidden h-11 w-full sm:w-auto rounded-xl bg-zinc-950 px-3 text-sm font-medium text-white hover:bg-zinc-900"
               title="הוסף מטרה"
             >
               הוסף מטרה
