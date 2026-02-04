@@ -161,18 +161,11 @@ function Modal({
   return (
     <div
       className="fixed inset-0 z-50 bg-black/40"
-      onPointerDown={(e) => {
-        // נסגור רק אם לחצו על הרקע עצמו (לא על תוכן המודל)
-        if (e.target === e.currentTarget) onClose();
-      }}
       role="dialog"
       aria-modal="true"
       aria-label={title}
     >
-      <div
-        className="relative mx-auto mt-10 w-[min(980px,92vw)] rounded-3xl border border-black/10 bg-white/95 p-6 md:p-8 shadow-[0_24px_90px_rgba(0,0,0,0.30)] backdrop-blur"
-        onPointerDown={(e) => e.stopPropagation()}
-      >
+      <div className="relative mx-auto mt-10 w-[min(980px,92vw)] rounded-3xl border border-black/10 bg-white/95 p-6 md:p-8 shadow-[0_24px_90px_rgba(0,0,0,0.30)] backdrop-blur">
         <div className="flex items-center justify-between gap-3">
           <div className="text-lg font-semibold text-zinc-950">{title}</div>
 
