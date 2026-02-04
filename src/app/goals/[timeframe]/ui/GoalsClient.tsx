@@ -160,14 +160,18 @@ function Modal({
 
   return (
     <div className="fixed inset-0 z-50">
-      <button
-        type="button"
-        onClick={onClose}
+      {/* Backdrop */}
+      <div
         className="absolute inset-0 bg-black/40"
-        aria-label="סגור"
+        onClick={onClose}
+        aria-hidden="true"
       />
 
-      <div className="relative mx-auto mt-10 w-[min(980px,92vw)] rounded-3xl border border-black/10 bg-white/95 p-6 md:p-8 shadow-[0_24px_90px_rgba(0,0,0,0.30)] backdrop-blur">
+      {/* Content */}
+      <div
+        className="relative z-10 mx-auto mt-10 w-[min(980px,92vw)] rounded-3xl border border-black/10 bg-white/95 p-6 md:p-8 shadow-[0_24px_90px_rgba(0,0,0,0.30)] backdrop-blur"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex items-center justify-between gap-3">
           <div className="text-lg font-semibold text-zinc-950">{title}</div>
 
