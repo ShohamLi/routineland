@@ -1,0 +1,12 @@
+// public/sw.js
+
+self.addEventListener("install", () => {
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+// כרגע בלי caching כדי לא “לשבור” שום דבר.
+// אפשר להוסיף caching אחר כך אם רוצים offline אמיתי.
