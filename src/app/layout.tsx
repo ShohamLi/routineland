@@ -1,7 +1,9 @@
 // src/app/layout.tsx
 import "./globals.css";
 import type { Metadata } from "next";
+
 import ReminderEngine from "@/components/ReminderEngine";
+import RegisterSW from "@/components/RegisterSW";
 
 export const metadata: Metadata = {
   title: "RoutineLand",
@@ -16,7 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-// ✅ Next רוצה themeColor פה (ולא בתוך metadata)
 export const viewport = {
   themeColor: "#0ea5e9",
 };
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="he" dir="rtl">
       <body>
+        <RegisterSW />
         <ReminderEngine />
         {children}
       </body>
