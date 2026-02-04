@@ -5,6 +5,7 @@ import Toast from "@/components/Toast";
 
 import Link from "next/link";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 import { loadGoalsUiPrefs, saveGoalsUiPrefs } from "@/lib/uiPrefs";
 import {
@@ -144,7 +145,7 @@ function getInitialData(timeframe: Timeframe) {
   };
 }
 
-/* -------------------- Bigger Modal (Readable) -------------------- */
+/* -------------------- Portal Modal (Stable input focus) -------------------- */
 function Modal({
   open,
   title,
@@ -156,15 +157,16 @@ function Modal({
   children: ReactNode;
   onClose: () => void;
 }) {
-  if (!open) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <div
-      className="fixed inset-0 z-50 bg-black/40"
-      role="dialog"
-      aria-modal="true"
-      aria-label={title}
-    >
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!open || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] bg-black/40" role="dialog" aria-modal="true" aria-label={title}>
       <div className="relative mx-auto mt-10 w-[min(980px,92vw)] rounded-3xl border border-black/10 bg-white/95 p-6 md:p-8 shadow-[0_24px_90px_rgba(0,0,0,0.30)] backdrop-blur">
         <div className="flex items-center justify-between gap-3">
           <div className="text-lg font-semibold text-zinc-950">{title}</div>
@@ -182,7 +184,8 @@ function Modal({
 
         <div className="mt-4">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -677,7 +680,6 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
             </h1>
           </div>
 
-          {/* ✅ FIX: במובייל זה נשבר לשורות ולא “בורח” מחוץ למסך */}
           <div className="flex flex-wrap items-center gap-2">
             <select
               value={categoryFilter}
@@ -708,7 +710,6 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
               נקה
             </button>
 
-            {/* מובייל: פותח Modal */}
             <button
               type="button"
               onClick={() => setAddOpen(true)}
@@ -720,12 +721,10 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
           </div>
         </div>
 
-        {/* דסקטופ/טאבלט: כרטיס הוספה רגיל */}
         <div className="hidden md:block">
           <AddOrEditForm mode="add" />
         </div>
 
-        {/* Empty state / groups */}
         {filtered.length === 0 ? (
           <div className="mt-6 rounded-2xl border border-black/10 bg-white/85 p-6 text-zinc-700 shadow-sm backdrop-blur">
             אין מטרות להצגה בטווח הזה. נסה להוסיף מטרה או לנקות פילטרים.
@@ -769,7 +768,6 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
                           ? "text-zinc-800 bg-black/5 border-black/10"
                           : "text-zinc-900 bg-black/5 border-black/10";
 
-                      // מציגים מוקדם ← מאוחר
                       const s = parseLocalDateTime(g.startAt);
                       const e = parseLocalDateTime(g.endAt);
                       const from = s <= e ? g.startAt : g.endAt;
@@ -841,12 +839,10 @@ export default function GoalsClient({ timeframe }: { timeframe: Timeframe }) {
         )}
       </div>
 
-      {/* מובייל: Modal להוספה */}
       <Modal open={addOpen} title={`הוסף מטרה (${header})`} onClose={() => setAddOpen(false)}>
         <AddOrEditForm mode="add" />
       </Modal>
 
-      {/* Edit Modal */}
       <Modal
         open={editOpen}
         title="עריכת מטרה"
