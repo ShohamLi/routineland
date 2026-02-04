@@ -1,4 +1,4 @@
-// /Users/shoham/Desktop/routine/src/app/goals/[timeframe]/page.tsx
+// src/app/goals/[timeframe]/page.tsx
 
 import GoalsClient from "./ui/GoalsClient";
 import { Timeframe } from "@/lib/types";
@@ -11,12 +11,7 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-// ✅ Next לפעמים נותן params כ-Promise, אז מפרקים עם await
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ timeframe: Timeframe }> | { timeframe: Timeframe };
-}) {
+export default async function Page({ params }: any) {
   const resolved = await Promise.resolve(params);
-  return <GoalsClient timeframe={resolved.timeframe} />;
+  return <GoalsClient timeframe={resolved.timeframe as Timeframe} />;
 }

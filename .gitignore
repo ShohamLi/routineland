@@ -16,3 +16,7 @@ out/
 
 # vercel
 .vercel
+
+# PWA build artifacts
+/public/sw.js
+/public/workbox-*.js
